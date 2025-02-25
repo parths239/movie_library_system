@@ -68,9 +68,9 @@ const BorrowBook = ({
       onClick={handleBorrow}
       disabled={requesting || !isEligible}
     >
-      <Image src="/icons/book.svg" alt="book" width={20} height={20} />
+      <Image src="/icons/logo.png" alt="book" width={20} height={20} />
       <p className="font-bebas-neue text-xl text-dark-100">
-        {requesting ? "Borrowing..." : "Borrow Book"}
+        {requesting ? "Borrowing..." : "Borrow Movie"}
       </p>
     </Button>
   );

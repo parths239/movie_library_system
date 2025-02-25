@@ -14,7 +14,7 @@ const Header = async () => {
   return (
     <header className="my-10 flex items-center justify-between gap-5">
       <Link href="/">
-        <Image src="/icons/logo.svg" alt="logo" width={40} height={40} />
+        <Image src="/favicon.ico" alt="logo" width={40} height={40} />
       </Link>
 
       <div className="flex items-center gap-5">

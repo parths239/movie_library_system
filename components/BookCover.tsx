@@ -40,7 +40,7 @@ const BookCover = ({
       <BookCoverSvg coverColor={coverColor} />
       <div
         className="absolute z-10"
-        style={{ left: "12%", width: "87.5%", height: "80%" }}
+        style={{ left: "12%", width: "87.5%", height: "88%" }}
       >
         <IKImage
           path={coverImage}

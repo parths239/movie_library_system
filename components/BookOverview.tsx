@@ -2,6 +2,7 @@ import Image from "next/image";
 import { eq, is, and, desc } from "drizzle-orm";
 import dayjs from "dayjs";
 
+
 import BookCover from "@/components/BookCover";
 import BorrowBook from "@/components/BorrowBook";
 import { Button } from "@/components/ui/button";
@@ -131,7 +132,7 @@ const BookOverview = async ({
         ) : (
           <Alert className="bg-primary/10 border-primary/20 text-primary">
             <AlertDescription>
-              You cannot borrow this book at this time.
+              You cannot borrow this Movie at this time.
             </AlertDescription>
           </Alert>
         )}

@@ -170,7 +170,7 @@ const BookForm = ({ type = "CREATE", book }: Props) => {
                 <Input
                   type="number"
                   min={1}
-                  max={5}
+                  max={10}
                   placeholder="Book rating"
                   {...field}
                   className="book-form_input"
