@@ -41,9 +41,9 @@ const Header = async () => {
   return (
     <header className="my-10 flex justify-between gap-5">
       <Link href="/" className="flex flex-row items-center gap-2">
-        <Image src="/icons/logo.svg" alt="logo" width={40} height={40} />
+        <Image src="/icons/logo.png" alt="logo" width={40} height={40} />
         <h2 className="font-bebas-neue text-4xl text-light-100 hidden sm:block">
-          BookWise
+          MovieNest
         </h2>
       </Link>
 

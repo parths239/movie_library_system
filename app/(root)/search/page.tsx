@@ -86,7 +86,7 @@ const Page = () => {
                 <FormControl>
                   <Input
                     required
-                    placeholder="Search book"
+                    placeholder="Search movie"
                     {...field}
                     className="book-form_input"
                   />

@@ -41,7 +41,7 @@ const BookSearchForm = () => {
 
     const {dismiss} = toast({
         title: "Searching",
-        description: `Searching for books with keyword: ${values.search}`, 
+        description: `Searching for movies with keyword: ${values.search}`, 
       })
 
     const book = values.search.toLowerCase();
@@ -56,7 +56,7 @@ const BookSearchForm = () => {
     else{
         toast({
             title: "Error",
-            description: "No books found",
+            description: "No movies found",
             variant: 'destructive'
           })
     }
@@ -78,7 +78,7 @@ const BookSearchForm = () => {
               <FormControl>
                 <Input
                   required
-                  placeholder="Search book"
+                  placeholder="Search movies"
                   {...field}
                   className="book-form_input"
                 />
