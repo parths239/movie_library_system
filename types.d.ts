@@ -1,5 +1,5 @@
 interface Book {
-  id: string;
+  id: number;
   title: string;
   author: string;
   genre: string;
@@ -15,6 +15,7 @@ interface Book {
   status?: string;
   dueDate?: string;
   borrowDate?:string;
+  isLoanedBook?: boolean;
 }
 
 interface AuthCredentials {

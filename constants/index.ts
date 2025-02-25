@@ -58,7 +58,7 @@ export const FIELD_TYPES = {
 export const sampleBooks = [
   {
     id: 1,
-    title: "The Midnight Library",
+    title: "The Midnight moon",
     author: "Matt Haig",
     genre: "Fantasy / Fiction",
     rating: 4.6,

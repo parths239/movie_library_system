@@ -21,12 +21,12 @@ const Home = async () => {
     <div>
       <BookOverview {...latestBooks[0]} userId={session?.user?.id as string}/>
       <BookList
-        title="Latest Books"
+        title="Latest Movies"
         books={latestBooks.slice(1)}
         containerClassName="mt-28"
       />
       <BookList
-        title="Remaining Books"
+        title="Remaining Movies"
         books={allBooks.slice(10)}
         containerClassName="mt-28"
       />

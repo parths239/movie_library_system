@@ -24,7 +24,7 @@ const IDCard: React.FC<UserProps> = ({
         {/* Profile Image */}
         <div className="flex items-center gap-4">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src="https://avatars.githubusercontent.com/u/22881885?v=4&size=64" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div>
@@ -37,7 +37,7 @@ const IDCard: React.FC<UserProps> = ({
         {/* University Info */}
         <div className="mt-4">
           <p className="text-gray-400 text-sm">University</p>
-          <p className="text-white font-bold text-lg">JSM University</p>
+          <p className="text-white font-bold text-lg">Not Known</p>
         </div>
 
         <div className="mt-4">

@@ -21,7 +21,7 @@ const BookOverview = async ({
   coverUrl,
   id,
   userId,
-}: Props) => {
+}: Book) => {
   const [user] = await db
     .select()
     .from(users)
@@ -39,6 +39,7 @@ const BookOverview = async ({
     <section className="book-overview">
       <div className="flex flex-1 flex-col gap-5">
         <h1>{title}</h1>
+        {/* <h1> A Long Movie Title</h1> */}
 
         <div className="book-info">
           <p>
@@ -58,11 +59,11 @@ const BookOverview = async ({
 
         <div className="book-copies">
           <p>
-            Total Books <span>{totalCopies}</span>
+            Total Movies <span>{totalCopies}</span>
           </p>
 
           <p>
-            Available Books <span>{availableCopies}</span>
+            Available Movies<span>{availableCopies}</span>
           </p>
         </div>
 

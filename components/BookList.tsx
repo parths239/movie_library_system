@@ -77,7 +77,7 @@ const BookList = ({ title, books, containerClassName }: Props) => {
     <section className={containerClassName}>
       <div className="flex flex-row justify-between items-center mt-10">
         <h2 className="font-bebas-neue text-4xl text-light-100">
-          {title}
+          Popular Movies
         </h2>
         {
           title === "Search Results" && (
