@@ -65,11 +65,11 @@ const Page = () => {
 
   return (
     <div className="book-search flex flex-col items-center">
-      <h2 className="book-description">DISCOVER YOUR NEXT GREAT READ:</h2>
+      <h2 className="book-description">DISCOVER YOUR NEXT GREAT WATCH:</h2>
 
       <h1 className="max-w-3xl mb-10">
         Explore and Search for{" "}
-        <span className="font-semibold text-light-200">Any Book</span> In Our
+        <span className="font-semibold text-light-200">Any Film</span> In Our
         Library
       </h1>
 

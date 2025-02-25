@@ -75,9 +75,17 @@ const Page = async () => {
 console.log(user)
 
   return (
-    <div className="lg:grid lg:grid-cols-2 gap-4">
+    <div className="gap-4 lg:grid lg:grid-cols-2">
       <IDCard {...user}/>
-      <BookList title="Borrowed books" books={borrowedBooks} />
+      <BookList 
+        title="Borrowed Movies:" 
+        books={borrowedBooks.map(book => ({
+          ...book,
+          status: book.status ?? undefined, // Convert null to undefined
+          dueDate: book.dueDate ?? undefined, // Convert null to undefined
+          borrowDate: book.borrowDate ? book.borrowDate.toISOString() : undefined, // Convert Date to string or undefined
+        }))} 
+      />
     </div>
   );
 };
