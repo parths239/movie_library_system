@@ -1,92 +1,107 @@
-// import React from "react";
-// import { Button } from "@/components/ui/button";
-// import { signOut } from "@/auth";
-// import BookList from "@/components/BookList";
-// import { sampleBooks } from "@/constants";
+import { eq, desc, and } from "drizzle-orm";
+import { BadgeCheck } from "lucide-react";
+import Image from "next/image";
 
-// const Page = () => {
-//   return (
-//     <>
-//       <form
-//         action={async () => {
-//           "use server";
-
-//           await signOut();
-//         }}
-//         className="mb-10"
-//       >
-//         <Button>Logout</Button>
-//       </form>
-
-//       <BookList title="Borrowed Books" books={sampleBooks} />
-//     </>
-//   );
-// };
-// export default Page;
-import React from "react";
-import { db } from "@/database/drizzle";
-import { books } from "@/database/schema";
-import { borrowRecords } from "@/database/schema";
-import { eq } from "drizzle-orm";
-import { auth } from "@/auth";
+import { Button } from "@/components/ui/button";
 import BookList from "@/components/BookList";
-import IDCard from "@/components/DigitalId";
-import { users } from "@/database/schema";
+import UniversityCard from "@/components/UniversityCard";
+
+import { signOut } from "@/auth";
+import { sampleBooks } from "@/constants";
+import { auth } from "@/auth";
+import { db } from "@/database/drizzle";
+import { users, borrowRecords, books } from "@/database/schema";
 
 const Page = async () => {
   const session = await auth();
 
-  const userId = session?.user?.id as string;
-  const borrowedBooks = await db
-  .select({
-    id: books.id,
-    title: books.title,
-    author: books.author,
-    genre: books.genre,
-    rating: books.rating,
-    totalCopies: books.totalCopies,
-    availableCopies: books.availableCopies,
-    description: books.description,
-    coverColor: books.coverColor,
-    coverUrl: books.coverUrl,
-    videoUrl: books.videoUrl,
-    summary: books.summary,
-    createdAt: books.createdAt,
-    
-    // Borrow-related data (null if not borrowed)
-    borrowDate: borrowRecords.borrowDate,
-    dueDate: borrowRecords.dueDate,
-    returnDate: borrowRecords.returnDate,
-    status: borrowRecords.status,
-  })
-  .from(books)
-  .leftJoin(borrowRecords, eq(borrowRecords.bookId, books.id))
-  .where(eq(borrowRecords.userId, userId)) // Optional: Include only borrowed books, remove if not needed.
-
-
-  // Fetch the user with the matching userId
-  const [user] = await db
+  const [currentUser] = await db
     .select()
     .from(users)
-    .where(eq(users.id, userId))
-    .limit(1); // Limit to one user
+    .where(eq(users.id, session?.user?.id as string))
+    .limit(1);
 
-
-console.log(user)
+  const borrowedRecords = await db
+    .select()
+    .from(borrowRecords)
+    .rightJoin(books, eq(borrowRecords.bookId, books.id))
+    .where(and(eq(borrowRecords.userId, session?.user?.id as string), eq(borrowRecords.status, "BORROWED")))
+    .orderBy(desc(borrowRecords.createdAt));
 
   return (
-    <div className="gap-4 lg:grid lg:grid-cols-2">
-      <IDCard {...user}/>
-      <BookList 
-        title="Borrowed Movies:" 
-        books={borrowedBooks.map(book => ({
-          ...book,
-          status: book.status ?? undefined, // Convert null to undefined
-          dueDate: book.dueDate ?? undefined, // Convert null to undefined
-          borrowDate: book.borrowDate ? book.borrowDate.toISOString() : undefined, // Convert Date to string or undefined
-        }))} 
-      />
-    </div>
+    <>
+      {/* <form
+        action={async () => {
+          "use server";
+
+          await signOut();
+        }}
+        className="mb-10"
+      >
+        <Button>Logout</Button>
+      </form> */}
+
+      {/* <BookList title="Borrowed Books" books={sampleBooks} /> */}
+      <section className="profile_container">
+        <div className="profile_card">
+          <div className="profile_card-pin">
+            <div />
+          </div>
+
+          <div className="mt-[70px] flex gap-5">
+            <div className="w-[110px] h-[110px] flex items-center justify-center rounded-full bg-[#333C5C]">
+              <Image
+                src="https://placehold.co/99x99.png"
+                alt=""
+                width={99}
+                height={99}
+                className="rounded-full"
+              />
+            </div>
+            <div>
+              {currentUser?.status === "APPROVED" ? (
+                <p className="text-[14px] flex items-center gap-1 text-white">
+                  <BadgeCheck className="inline h-[16px] w-[16px]" /> Verified
+                  Student
+                </p>
+              ) : (
+                <p className="text-[14px] text-red-700">Account not verified yet.</p>
+              )}
+              <p className="font-semibold text-[24px] text-white mt-[10px] mb-[5px]">
+                {currentUser?.fullName}
+              </p>
+              <p className="text-[14px] text-[#D6E0FF]">{currentUser?.email}</p>
+            </div>
+          </div>
+
+          <div className="mt-[32px]">
+            <p className="text-[18px] text-[#D6E0FF]">Student ID:</p>
+            <p className="font-semibold text-[24px] text-white">
+              {currentUser?.universityId}
+            </p>
+          </div>
+
+          <div className="mt-[32px]">
+            <UniversityCard universityCard={currentUser?.universityCard} />
+          </div>
+        </div>
+
+        <div className="flex-1 flex flex-col gap-5 lg:mt-5">
+          <BookList
+            title="Borrowed Books"
+            books={borrowedRecords.map((record) => ({
+              // Spread book details
+              ...record.books,
+              isLoanedBook:
+                record.borrow_records?.status === "BORROWED" ? true : false,
+              dueDate: record.borrow_records?.dueDate,
+              // Add borrow-specific information
+              // Include other borrow record fields if needed
+            }))}
+          />
+        </div>
+      </section>
+    </>
   );
 };
 

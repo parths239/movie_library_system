@@ -1,18 +1,17 @@
 import NextAuth, { User } from "next-auth";
-import { compare } from "bcryptjs";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { db } from "@/database/drizzle";
-import { users } from "@/database/schema";
+import Credentials from "next-auth/providers/credentials";
 import { eq } from "drizzle-orm";
+import { compare } from "bcryptjs";
+
+import { users } from "@/database/schema";
+import { db } from "./database/drizzle";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  session: {
-    strategy: "jwt",
-  },
+  session: { strategy: "jwt" },
   providers: [
-    CredentialsProvider({
+    Credentials({
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
+        if (!credentials?.email || !credentials.password) {
           return null;
         }
 
@@ -26,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const isPasswordValid = await compare(
           credentials.password.toString(),
-          user[0].password,
+          user[0].password
         );
 
         if (!isPasswordValid) return null;

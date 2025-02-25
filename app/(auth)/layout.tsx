@@ -1,7 +1,8 @@
-import { ReactNode } from "react";
 import Image from "next/image";
-import { auth } from "@/auth";
+import { ReactNode } from "react";
 import { redirect } from "next/navigation";
+
+import { auth } from "@/auth";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   const session = await auth();
@@ -21,15 +22,15 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         </div>
       </section>
 
-      <section className="auth-illustration">
+      <div className="auth-illustration">
         <Image
           src="/images/movies.jpg"
-          alt="auth illustration"
+          alt="illustration"
           height={1000}
           width={1000}
           className="size-full object-cover"
         />
-      </section>
+      </div>
     </main>
   );
 };

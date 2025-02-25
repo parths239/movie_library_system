@@ -1,83 +1,48 @@
-// import Link from "next/link";
-// import Image from "next/image";
-// import { signOut } from "@/auth";
-// import { Button } from "@/components/ui/button";
-
-// const Header = () => {
-//   return (
-//     <header className="my-10 flex justify-between gap-5">
-//       <Link href="/">
-//         <Image src="/icons/logo.svg" alt="logo" width={40} height={40} />
-//       </Link>
-
-//       <ul className="flex flex-row items-center gap-8">
-//         <li>
-//           <form
-//             action={async () => {
-//               "use server";
-
-//               await signOut();
-//             }}
-//             className="mb-10"
-//           >
-//             <Button>Logout</Button>
-//           </form>
-//         </li>
-//       </ul>
-//     </header>
-//   );
-// };
-
-// export default Header;
-
 import Link from "next/link";
 import Image from "next/image";
-import { CiLogout } from "react-icons/ci";
-import { signOut } from "@/auth";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { LogOut, Search } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+
+import { signOut, auth } from "@/auth";
+import { getInitials } from "@/lib/utils";
 
 const Header = async () => {
+  const session = await auth();
+
   return (
-    <header className="my-10 flex justify-between gap-5">
-      <Link href="/" className="flex flex-row items-center gap-2">
-        <Image src="/icons/logo.png" alt="logo" width={40} height={40} />
-        <h2 className="font-bebas-neue text-4xl text-light-100 hidden sm:block">
-          MovieNest
-        </h2>
+    <header className="my-10 flex items-center justify-between gap-5">
+      <Link href="/">
+        <Image src="/icons/logo.svg" alt="logo" width={40} height={40} />
       </Link>
 
-      <ul className="flex flex-row items-center gap-8 items-start">
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/search">Search</Link>
-        </li>
-        <li className="flex flex-row gap-2 items-center">
-          <Link href={
-            '/my-profile'
-          }>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+      <div className="flex items-center gap-5">
+        <Link href="/search">
+          <span className="max-sm:hidden text-[20px] text-white font-ibm-plex-sans">Search</span>
+          <Search className="size-6 text-white sm:hidden" />
         </Link>
-        </li>
-        <li>
 
-            <CiLogout className="cursor-pointer" onClick={async () => {
-              
-              "use server";
+        <Link href="/my-profile">
+          <Avatar>
+            <AvatarFallback className="bg-amber-100">
+              {getInitials(session?.user?.name || "IN")}
+            </AvatarFallback>
+          </Avatar>
+        </Link>
 
-              await signOut();
-            }} style={{ color: "red" }} />
+        <button
+          onClick={async () => {
+            "use server";
 
-        </li>
-      </ul>
+            await signOut();
+          }}
+        >
+          <LogOut className="size-6 text-[#FF5969]" />
+        </button>
+      </div>
     </header>
   );
 };
 
 export default Header;
-

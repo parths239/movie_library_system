@@ -1,12 +1,13 @@
 "use client";
-
 import Image from "next/image";
-import { adminSideBarLinks } from "@/constants";
 import Link from "next/link";
-import { cn, getInitials } from "@/lib/utils";
 import { usePathname } from "next/navigation";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Session } from "next-auth";
+
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+
+import { adminSideBarLinks } from "@/constants";
+import { cn, getInitials } from "@/lib/utils";
 
 const Sidebar = ({ session }: { session: Session }) => {
   const pathname = usePathname();
@@ -16,10 +17,10 @@ const Sidebar = ({ session }: { session: Session }) => {
       <div>
         <div className="logo">
           <Image
-            src="/icons/admin/logo.svg"
+            src="/icons/logo.png"
             alt="logo"
-            height={37}
             width={37}
+            height={37}
           />
           <h1>MovieNest</h1>
         </div>
@@ -37,7 +38,7 @@ const Sidebar = ({ session }: { session: Session }) => {
                 <div
                   className={cn(
                     "link",
-                    isSelected && "bg-primary-admin shadow-sm",
+                    isSelected && "bg-primary-admin shadow-sm"
                   )}
                 >
                   <div className="relative size-5">
@@ -45,7 +46,9 @@ const Sidebar = ({ session }: { session: Session }) => {
                       src={link.img}
                       alt="icon"
                       fill
-                      className={`${isSelected ? "brightness-0 invert" : ""}  object-contain`}
+                      className={`${
+                        isSelected ? "brightness-0 invert" : ""
+                      } object-contain`}
                     />
                   </div>
 
@@ -68,7 +71,7 @@ const Sidebar = ({ session }: { session: Session }) => {
 
         <div className="flex flex-col max-md:hidden">
           <p className="font-semibold text-dark-200">{session?.user?.name}</p>
-          <p className="text-xs text-light-500">{session?.user?.email}</p>
+          <p className="text-light-500 text-xs">{session?.user?.email}</p>
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss";
 
 export default {
@@ -108,7 +107,7 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       backgroundImage: {
-        pattern: "url('/images/EXPORT-BG.png')",
+        pattern: "url('/images/pattern.webp')",
       },
     },
   },

@@ -1,20 +1,22 @@
-import React, { ReactNode } from "react";
-import { auth } from "@/auth";
+import { ReactNode } from "react";
 import { redirect } from "next/navigation";
-import "@/styles/admin.css";
-import Sidebar from "@/components/admin/Sidebar";
-import Header from "@/components/admin/Header";
-import { db } from "@/database/drizzle";
-import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";
 
-const Layout = async ({ children }: { children: ReactNode }) => {
+import Sidebar from "@/components/admin/Sidebar";
+import Header from "@/components/admin/Header";
 
+import { auth } from "@/auth";
+import "@/styles/admin.css";
+import { db } from "@/database/drizzle";
+import { users } from "@/database/schema";
+
+const Layout = async ({ children }: { children: ReactNode }) => {
   const session = await auth();
+
   if (!session?.user?.id) redirect("/sign-in");
 
   const isAdmin = await db
-    .select({ isAdmin: users.role })
+    .select({ isAdmin: users.role})
     .from(users)
     .where(eq(users.id, session.user.id))
     .limit(1)
@@ -33,4 +35,5 @@ const Layout = async ({ children }: { children: ReactNode }) => {
     </main>
   );
 };
+
 export default Layout;

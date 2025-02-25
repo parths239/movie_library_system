@@ -1,5 +1,4 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   DefaultValues,
@@ -10,22 +9,24 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { ZodType } from "zod";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
 import FileUpload from "@/components/FileUpload";
 import { toast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+
+import { FIELD_NAMES, FIELD_TYPES } from "@/constants";
 
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;
@@ -41,7 +42,6 @@ const AuthForm = <T extends FieldValues>({
   onSubmit,
 }: Props<T>) => {
   const router = useRouter();
-
   const isSignIn = type === "SIGN_IN";
 
   const form: UseFormReturn<T> = useForm({
@@ -63,8 +63,8 @@ const AuthForm = <T extends FieldValues>({
       router.push("/");
     } else {
       toast({
-        title: `Error ${isSignIn ? "signing in" : "signing up"}`,
-        description: result.error ?? "An error occurred.",
+        title: `Error ${isSignIn ? "signing in" : "signing up"}.`,
+        description: result.error ?? "An error occured",
         variant: "destructive",
       });
     }
@@ -73,17 +73,17 @@ const AuthForm = <T extends FieldValues>({
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-semibold text-white">
-        {isSignIn ? "Welcome back to MovieNest" : "Create your Film library account"}
+        {isSignIn ? "Welcome to MovieNest" : "Create your account"}
       </h1>
       <p className="text-light-100">
         {isSignIn
           ? "Access the vast collection of resources, and stay updated"
-          : "Please complete all fields and upload a valid university ID to gain access to the Film library"}
+          : "Please complete all fields and upload a valid university ID to gain access to the library"}
       </p>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit)}
-          className="w-full space-y-6"
+          className="space-y-6 w-full"
         >
           {Object.keys(defaultValues).map((field) => (
             <FormField
@@ -100,7 +100,7 @@ const AuthForm = <T extends FieldValues>({
                       <FileUpload
                         type="image"
                         accept="image/*"
-                        placeholder="Upload your ID"
+                        placeholder="Upload your university ID"
                         folder="ids"
                         variant="dark"
                         onFileChange={field.onChange}
@@ -121,7 +121,6 @@ const AuthForm = <T extends FieldValues>({
               )}
             />
           ))}
-
           <Button type="submit" className="form-btn">
             {isSignIn ? "Sign In" : "Sign Up"}
           </Button>
@@ -135,10 +134,11 @@ const AuthForm = <T extends FieldValues>({
           href={isSignIn ? "/sign-up" : "/sign-in"}
           className="font-bold text-primary"
         >
-          {isSignIn ? "Create an account" : "Sign in"}
+          {isSignIn ? "Create an account" : "Sign In"}
         </Link>
       </p>
     </div>
   );
 };
+
 export default AuthForm;

@@ -1,12 +1,10 @@
 "use client";
+import Image from "next/image";
+import { IKImage } from "imagekitio-next";
 
-import React from "react";
 import { cn } from "@/lib/utils";
 import BookCoverSvg from "@/components/BookCoverSvg";
-import { IKImage } from "imagekitio-next";
 import config from "@/lib/config";
-
-type BookCoverVariant = "extraSmall" | "small" | "medium" | "regular" | "wide";
 
 const variantStyles: Record<BookCoverVariant, string> = {
   extraSmall: "book-cover_extra_small",
@@ -15,6 +13,8 @@ const variantStyles: Record<BookCoverVariant, string> = {
   regular: "book-cover_regular",
   wide: "book-cover_wide",
 };
+
+type BookCoverVariant = "extraSmall" | "small" | "medium" | "regular" | "wide";
 
 interface Props {
   className?: string;
@@ -34,20 +34,18 @@ const BookCover = ({
       className={cn(
         "relative transition-all duration-300",
         variantStyles[variant],
-        className,
+        className
       )}
     >
       <BookCoverSvg coverColor={coverColor} />
-
       <div
         className="absolute z-10"
-        style={{ left: "12%", width: "87.5%", height: "88%" }}
+        style={{ left: "12%", width: "87.5%", height: "80%" }}
       >
         <IKImage
           path={coverImage}
-          // path = "/public/images/PorcoRosso.jpg"
           urlEndpoint={config.env.imagekit.urlEndpoint}
-          alt="Movie cover"
+          alt="book cover"
           fill
           className="rounded-sm object-fill"
           loading="lazy"
@@ -57,4 +55,5 @@ const BookCover = ({
     </div>
   );
 };
+
 export default BookCover;
