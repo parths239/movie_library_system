@@ -12,6 +12,9 @@ interface Book {
   videoUrl: string;
   summary: string;
   createdAt: Date | null;
+  status?: string;
+  dueDate?: string;
+  borrowDate?:string;
 }
 
 interface AuthCredentials {
